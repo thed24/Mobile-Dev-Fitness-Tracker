@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Fitness Tracker</string>
+    <string name="titleText">Exercise Tracker</string>
+    <string name="add_new_entry">Add New Entry</string>
+</resources>
