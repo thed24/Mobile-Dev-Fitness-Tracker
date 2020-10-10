@@ -12,7 +12,7 @@
         android:id="@+id/titleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Fitness Entry"
+        android:text="@string/new_fitness_entry_title"
         app:layout_constraintBottom_toTopOf="@+id/fitnessTypeTxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
         android:id="@+id/fitnessTypeTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fitness Type"
+        android:text="@string/fitness_type_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
@@ -41,7 +41,8 @@
         app:layout_constraintHorizontal_bias="0.875"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.531" />
+        app:layout_constraintVertical_bias="0.531"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/distanceTxt"
@@ -54,13 +55,14 @@
         app:layout_constraintHorizontal_bias="0.104"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.531" />
+        app:layout_constraintVertical_bias="0.531"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/submitBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
+        android:text="@string/submit_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -72,7 +74,7 @@
         android:id="@+id/timeSpentTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Time Spent"
+        android:text="@string/time_spent_txt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.791"
@@ -84,7 +86,7 @@
         android:id="@+id/distanceTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Distance"
+        android:text="@string/distance_txt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.179"
@@ -109,14 +111,14 @@
             style="@style/Widget.AppCompat.CompoundButton.RadioButton"
             android:layout_width="138dp"
             android:layout_height="wrap_content"
-            android:text="Walking" />
+            android:text="@string/walking_btn" />
 
         <RadioButton
             android:id="@+id/runningRadioBtn"
             android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Running" />
+            android:text="@string/running_btn" />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

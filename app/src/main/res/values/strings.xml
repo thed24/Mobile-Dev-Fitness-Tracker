@@ -2,4 +2,11 @@
     <string name="app_name">Fitness Tracker</string>
     <string name="titleText">Exercise Tracker</string>
     <string name="add_new_entry">Add New Entry</string>
+    <string name="new_fitness_entry_title">New Fitness Entry</string>
+    <string name="fitness_type_text">Fitness Type</string>
+    <string name="walking_btn">Walking</string>
+    <string name="running_btn">Running</string>
+    <string name="distance_txt">Distance</string>
+    <string name="time_spent_txt">Time Spent</string>
+    <string name="submit_btn">Submit</string>
 </resources>

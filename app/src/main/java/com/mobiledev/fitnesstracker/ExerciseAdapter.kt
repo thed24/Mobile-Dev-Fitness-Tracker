@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Button
 import android.widget.TextView
 
 
@@ -26,19 +27,17 @@ class ExerciseAdapter(var context: Context, var arrayItems: List<ExerciseItem>):
         val currentValue = arrayItems[position]
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        val newView = inflater.inflate(R.layout.exercise_item, parent, false)
+        val rowView = inflater.inflate(R.layout.exercise_item, parent, false)
 
-        val newViewText = newView.findViewById<TextView>(R.id.exercise_name)
-        newViewText.text = "Exercise Entry " + currentValue.id.toString()
+        val rowTextView = rowView.findViewById<TextView>(R.id.exercise_name)
+        rowTextView.text = "Exercise Entry " + currentValue.id.toString()
 
-        val newViewEditButton = newView.findViewById<TextView>(R.id.editExerciseBtn)
-        newViewEditButton.setOnClickListener {
-        }
+        val rowEditBtn = rowView.findViewById<Button>(R.id.editExerciseBtn)
+        rowEditBtn.setOnClickListener { }
 
-        val newViewDeleteButton = newView.findViewById<TextView>(R.id.deleteExerciseBtn)
-        newViewDeleteButton.setOnClickListener {
-        }
+        val rowDeleteBtn = rowView.findViewById<Button>(R.id.deleteExerciseBtn)
+        rowDeleteBtn.setOnClickListener { }
 
-        return newView
+        return rowView
     }
 }

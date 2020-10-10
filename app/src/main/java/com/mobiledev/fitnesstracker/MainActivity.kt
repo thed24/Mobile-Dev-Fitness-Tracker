@@ -8,7 +8,7 @@ import android.util.Log
 import android.widget.*
 import kotlinx.android.parcel.Parcelize
 
-@Parcelize //TODO: Inheritance based on FITNESS TYPE with weight training
+@Parcelize
 data class ExerciseItem(
     val id: Int,
     val distance: Float,
@@ -24,6 +24,8 @@ enum class FITNESS_TYPE {
 class MainActivity : AppCompatActivity() {
     private var exerciseListItems = mutableListOf<ExerciseItem>()
     private var exerciseAdapter = ExerciseAdapter(this, exerciseListItems)
+    private var DIALOGUE_WIDTH = 1000
+    private var DIALOGUE_HEIGHT = 1250
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         var entryFormDialog = Dialog(this)
         entryFormDialog.setContentView(R.layout.create_exercise_form)
         entryFormDialog.setCancelable(false)
-        entryFormDialog?.window?.setLayout(1000, 1250)
+        entryFormDialog?.window?.setLayout(DIALOGUE_WIDTH, DIALOGUE_HEIGHT)
 
         var exerciseTypeRadioGroup = entryFormDialog.findViewById<RadioGroup>(R.id.exerciseTypeRadioGroup)
         var distanceTxt = entryFormDialog.findViewById<TextView>(R.id.distanceTxt)
@@ -53,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         submitBtn.setOnClickListener{
             Log.d("NEW_EXERCISE_ITEM", distanceTxt.text.toString());
-
+            //TODO: Input validation
             exerciseListItems.add( ExerciseItem(
                 id = exerciseListItems.size + 1,
                 distance = distanceTxt.text.toString().toFloat(),
