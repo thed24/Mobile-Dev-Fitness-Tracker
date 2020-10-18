@@ -1,43 +1,45 @@
 package com.mobiledev.fitnesstracker
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
+import androidx.recyclerview.widget.RecyclerView
 
+class ExerciseAdapter(
+    private val data: List<ExerciseItem>,
+    private val controller: ExerciseController
+) : RecyclerView.Adapter<ExerciseAdapter.ViewHolder>() {
 
-class ExerciseAdapter(var context: Context, var arrayItems: List<ExerciseItem>): BaseAdapter() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val view = layoutInflater.inflate(R.layout.exercise_item, parent, false) as View
 
-    override fun getCount(): Int {
-        return arrayItems.size;
+        return ViewHolder(view)
     }
 
-    override fun getItem(position: Int): Any {
-        return arrayItems[position]
+    override fun getItemCount() = data.count()
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = data[position]
+        holder.bind(item, this, controller)
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+        private val rowTextView: TextView = v.findViewById(R.id.exercise_name)
+        private val editExerciseBtn: Button = v.findViewById(R.id.editExerciseBtn)
+        private val deleteExerciseBtn: Button = v.findViewById(R.id.deleteExerciseBtn)
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val currentValue = arrayItems[position]
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-        val rowView = inflater.inflate(R.layout.exercise_item, parent, false)
-
-        val rowTextView = rowView.findViewById<TextView>(R.id.exercise_name)
-        rowTextView.text = "Exercise Entry " + currentValue.id.toString()
-
-        val rowEditBtn = rowView.findViewById<Button>(R.id.editExerciseBtn)
-        rowEditBtn.setOnClickListener { }
-
-        val rowDeleteBtn = rowView.findViewById<Button>(R.id.deleteExerciseBtn)
-        rowDeleteBtn.setOnClickListener { }
-
-        return rowView
+        fun bind(item: ExerciseItem, context: ExerciseAdapter, controller: ExerciseController) {
+            rowTextView.text = "Exercise Entry " + item.id.toString()
+            editExerciseBtn.setOnClickListener {
+                controller.callUpdateEntryForm(item)
+                context.notifyDataSetChanged()
+            }
+            deleteExerciseBtn.setOnClickListener {
+                controller.removeEntry(item)
+                context.notifyDataSetChanged()
+            }
+        }
     }
 }
