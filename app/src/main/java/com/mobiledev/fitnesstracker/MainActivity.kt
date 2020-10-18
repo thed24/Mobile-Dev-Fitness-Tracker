@@ -32,8 +32,9 @@ class MainActivity : AppCompatActivity() {
 
         var addExerciseButton = findViewById<Button>(R.id.addExerciseBtn)
         addExerciseButton.setOnClickListener {
+            var positionStart = exerciseListItems.size
             exerciseController.callCreateNewEntryForm()
-            exerciseAdapter.notifyDataSetChanged()
+            exerciseAdapter.notifyItemRangeInserted(positionStart, exerciseListItems.size)
         }
 
         val viewManager = LinearLayoutManager(this)
