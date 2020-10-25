@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ExerciseItem(
-    val id: Int,
+    var id: Int,
     val distance: Float,
     val timeSpent: Float,
     val FITNESS_TYPE: FITNESS_TYPE,
@@ -23,8 +23,9 @@ enum class FITNESS_TYPE {
 
 class MainActivity : AppCompatActivity() {
     private var exerciseListItems = mutableListOf<ExerciseItem>()
-    private var exerciseController = ExerciseController(exerciseListItems, this)
-    private var exerciseAdapter = ExerciseAdapter(exerciseListItems, exerciseController)
+    private var exerciseController = ExerciseController(exerciseListItems)
+    private var modalController = ModalController(this, exerciseController)
+    private var exerciseAdapter = ExerciseAdapter(exerciseListItems, exerciseController, modalController)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +33,8 @@ class MainActivity : AppCompatActivity() {
 
         var addExerciseButton = findViewById<Button>(R.id.addExerciseBtn)
         addExerciseButton.setOnClickListener {
-            var positionStart = exerciseListItems.size
-            exerciseController.callCreateNewEntryForm()
-            exerciseAdapter.notifyItemRangeInserted(positionStart, exerciseListItems.size)
+            modalController.callCreateNewEntryForm(exerciseAdapter)
+            exerciseAdapter.notifyDataSetChanged()
         }
 
         val viewManager = LinearLayoutManager(this)

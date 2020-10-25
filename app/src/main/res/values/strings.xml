@@ -6,7 +6,12 @@
     <string name="fitness_type_text">Fitness Type</string>
     <string name="walking_btn">Walking</string>
     <string name="running_btn">Running</string>
-    <string name="distance_txt">Distance</string>
-    <string name="time_spent_txt">Time Spent</string>
+    <string name="distance_txt">Distance (km)</string>
+    <string name="time_spent_txt">Time Spent (hour)</string>
     <string name="submit_btn">Submit</string>
+    <string name="exercise_id">Exercise ID</string>
+    <string name="fitness_type">Fitness Type</string>
+    <string name="pace">Pace</string>
+    <string name="distance">Distance</string>
+    <string name="time_spent">Time Spent</string>
 </resources>
