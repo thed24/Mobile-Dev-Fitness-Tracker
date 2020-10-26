@@ -20,8 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:focusable="false"
-        android:onClick="Decrement"
-        android:text="Edit" />
+        android:text="@string/editBtn" />
 
     <Button
         android:id="@+id/deleteExerciseBtn"
@@ -29,7 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:focusable="false"
-        android:onClick="Increment"
-        android:text="Delete" />
+        android:text="@string/deleteBtn" />
 
 </LinearLayout>

@@ -8,36 +8,36 @@ import android.widget.RadioGroup
 import android.widget.TextView
 
 class ModalController (
-    private var context: Context,
-    private var exerciseController: ExerciseController
+    private val context: Context,
+    private val exerciseController: ExerciseController
 ){
-    private var DIALOGUE_WIDTH = 1000
-    private var DIALOGUE_HEIGHT = 1250
+    private val WIDTH = 1000
+    private val HEIGHT = 1250
 
     fun callCreateNewEntryForm(exerciseAdapter: ExerciseAdapter) {
-        var entryFormDialog = Dialog(context).apply {
+        val entryFormDialog = Dialog(context).apply {
             setContentView(R.layout.create_exercise_form)
             setCancelable(false)
-            window?.setLayout(DIALOGUE_WIDTH, DIALOGUE_HEIGHT)
+            window?.setLayout(WIDTH, HEIGHT)
         }
 
-        var exerciseTypeRadioGroup = entryFormDialog.findViewById<RadioGroup>(R.id.exerciseTypeRadioGroup)
-        var distanceTxt = entryFormDialog.findViewById<TextView>(R.id.distanceTxt)
-        var timeSpentTxt = entryFormDialog.findViewById<TextView>(R.id.timeSpentTxt)
-        var submitBtn = entryFormDialog.findViewById<Button>(R.id.submitBtn)
+        val exerciseTypeRadioGroup = entryFormDialog.findViewById<RadioGroup>(R.id.exerciseTypeRadioGroup)
+        val distanceTxt = entryFormDialog.findViewById<TextView>(R.id.distanceTxt)
+        val timeSpentTxt = entryFormDialog.findViewById<TextView>(R.id.timeSpentTxt)
+        val submitBtn = entryFormDialog.findViewById<Button>(R.id.submitBtn)
 
         entryFormDialog.show()
 
         submitBtn.setOnClickListener{
-            Log.d("NEW_EXERCISE_ITEM", distanceTxt.text.toString());
+            Log.d("NEW_EXERCISE_ITEM", distanceTxt.text.toString())
 
             val newItem = ExerciseItem(
                 id = 0,
                 distance = distanceTxt.text.toString().toFloat(),
                 timeSpent = timeSpentTxt.text.toString().toFloat(),
-                FITNESS_TYPE = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
-                    FITNESS_TYPE.RUNNING else
-                    FITNESS_TYPE.WALKING,
+                FITNESSTYPE = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
+                    FITNESSTYPE.RUNNING else
+                    FITNESSTYPE.WALKING,
                 pace = distanceTxt.text.toString().toFloat() / timeSpentTxt.text.toString().toFloat(),
             )
 
@@ -48,18 +48,18 @@ class ModalController (
     }
 
     fun callUpdateEntryForm(item: ExerciseItem, exerciseAdapter: ExerciseAdapter) {
-        var entryFormDialog = Dialog(context).apply {
+        val entryFormDialog = Dialog(context).apply {
             setContentView(R.layout.create_exercise_form)
             setCancelable(false)
-            window?.setLayout(DIALOGUE_WIDTH, DIALOGUE_HEIGHT)
+            window?.setLayout(WIDTH, HEIGHT)
         }
 
-        var exerciseTypeRadioGroup = entryFormDialog.findViewById<RadioGroup>(R.id.exerciseTypeRadioGroup)
-        var distanceTxt = entryFormDialog.findViewById<TextView>(R.id.distanceTxt)
-        var timeSpentTxt = entryFormDialog.findViewById<TextView>(R.id.timeSpentTxt)
-        var submitBtn = entryFormDialog.findViewById<Button>(R.id.submitBtn)
+        val exerciseTypeRadioGroup = entryFormDialog.findViewById<RadioGroup>(R.id.exerciseTypeRadioGroup)
+        val distanceTxt = entryFormDialog.findViewById<TextView>(R.id.distanceTxt)
+        val timeSpentTxt = entryFormDialog.findViewById<TextView>(R.id.timeSpentTxt)
+        val submitBtn = entryFormDialog.findViewById<Button>(R.id.submitBtn)
 
-        exerciseTypeRadioGroup.check( if (item.FITNESS_TYPE == FITNESS_TYPE.RUNNING) 0 else 1 )
+        exerciseTypeRadioGroup.check( if (item.FITNESSTYPE == FITNESSTYPE.RUNNING) 0 else 1 )
         distanceTxt.text = item.distance.toString()
         timeSpentTxt.text = item.timeSpent.toString()
 
@@ -68,13 +68,13 @@ class ModalController (
         submitBtn.setOnClickListener{
             Log.d("UPDATE_EXERCISE_ITEM", distanceTxt.text.toString())
 
-            var newItem = ExerciseItem(
+            val newItem = ExerciseItem(
                 id = item.id,
                 distance = distanceTxt.text.toString().toFloat(),
                 timeSpent = timeSpentTxt.text.toString().toFloat(),
-                FITNESS_TYPE = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
-                    FITNESS_TYPE.RUNNING else
-                    FITNESS_TYPE.WALKING,
+                FITNESSTYPE = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
+                    FITNESSTYPE.RUNNING else
+                    FITNESSTYPE.WALKING,
                 pace = timeSpentTxt.text.toString().toFloat(),
             )
 

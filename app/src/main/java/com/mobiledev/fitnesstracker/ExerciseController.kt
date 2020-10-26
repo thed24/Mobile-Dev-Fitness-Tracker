@@ -4,7 +4,7 @@ class ExerciseController(
     private var exerciseListItems: MutableList<ExerciseItem>,
 ) {
     fun updateEntry(newItem: ExerciseItem, oldItemId: Int) {
-        var oldItem = exerciseListItems.find {
+        val oldItem = exerciseListItems.find {
                 exercise -> exercise.id == oldItemId
         }
         if (oldItem != null) {
@@ -13,7 +13,7 @@ class ExerciseController(
     }
 
     fun addEntry(newItem: ExerciseItem) {
-        var item = newItem
+        val item = newItem
         item.id = exerciseListItems.size
         exerciseListItems.add(item)
     }

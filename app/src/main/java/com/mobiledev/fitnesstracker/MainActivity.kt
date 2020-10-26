@@ -13,11 +13,11 @@ data class ExerciseItem(
     var id: Int,
     val distance: Float,
     val timeSpent: Float,
-    val FITNESS_TYPE: FITNESS_TYPE,
+    val FITNESSTYPE: FITNESSTYPE,
     val pace: Float
 ) : Parcelable
 
-enum class FITNESS_TYPE {
+enum class FITNESSTYPE {
     WALKING, RUNNING
 }
 
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var addExerciseButton = findViewById<Button>(R.id.addExerciseBtn)
+        val addExerciseButton = findViewById<Button>(R.id.addExerciseBtn)
         addExerciseButton.setOnClickListener {
             modalController.callCreateNewEntryForm(exerciseAdapter)
             exerciseAdapter.notifyDataSetChanged()
