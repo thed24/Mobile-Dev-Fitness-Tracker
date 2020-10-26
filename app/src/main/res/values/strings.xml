@@ -7,7 +7,7 @@
     <string name="walking_btn">Walking</string>
     <string name="running_btn">Running</string>
     <string name="distance_txt">Distance (km)</string>
-    <string name="time_spent_txt">Time Spent (hour)</string>
+    <string name="time_spent_txt">Time Spent (minutes)</string>
     <string name="submit_btn">Submit</string>
     <string name="exercise_id">Exercise ID</string>
     <string name="fitness_type">Fitness Type</string>
@@ -16,4 +16,9 @@
     <string name="time_spent">Time Spent</string>
     <string name="editBtn">Edit</string>
     <string name="deleteBtn">Delete</string>
+    <string name="track_exercise_btn">Track Exercise</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>
+    <string name="settings">Settings</string>
+    <string name="permission_rationale">Location services are required, permission denied.</string>
+    <string name="no_location_detected">No location detected. Make sure location is enabled on the device.</string>
 </resources>

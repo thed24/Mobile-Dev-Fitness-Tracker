@@ -27,8 +27,8 @@ class ExerciseItemActivity : AppCompatActivity() {
             val timeSpentAmountTxt = findViewById<TextView>(R.id.timeSpentAmountTxt)
             val isSingleHour = parseFloat(item.timeSpent.toString()) > 1.00
             timeSpentAmountTxt.text = if (isSingleHour)
-                item.timeSpent.toString() + " hour" else
-                item.timeSpent.toString() + " hours"
+                item.timeSpent.toString() + " minute" else
+                item.timeSpent.toString() + " minutes"
 
             val fitnessTxt = findViewById<TextView>(R.id.fitnessTxt)
             fitnessTxt.text = item.FITNESSTYPE.toString().capitalize(Locale.getDefault())

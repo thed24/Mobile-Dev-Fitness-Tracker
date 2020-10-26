@@ -28,12 +28,24 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exerciseList"
-        android:layout_width="321dp"
-        android:layout_height="489dp"
+        android:layout_width="303dp"
+        android:layout_height="327dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.733" />
+        app:layout_constraintVertical_bias="0.361" />
+
+    <Button
+        android:id="@+id/trackerBtn"
+        android:layout_width="138dp"
+        android:layout_height="132dp"
+        android:text="@string/track_exercise_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.973" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
