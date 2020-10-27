@@ -1,13 +1,8 @@
 package com.mobiledev.fitnesstracker
 
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.icu.util.Calendar
 import android.location.Location
-import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
-import android.provider.Settings
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,8 +12,10 @@ import com.google.android.gms.location.LocationServices
 import com.mobiledev.fitnesstracker.controllers.ExerciseController
 import com.mobiledev.fitnesstracker.controllers.ModalController
 import com.mobiledev.fitnesstracker.domain.ExerciseAdapter
+import com.mobiledev.fitnesstracker.domain.LocationManager
 import kotlinx.android.parcel.Parcelize
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 @Parcelize
 data class ExerciseItem(
@@ -41,7 +38,11 @@ class MainActivity : AppCompatActivity() {
     private var exerciseListItems = mutableListOf<ExerciseItem>()
     private var exerciseController = ExerciseController(exerciseListItems)
     private var modalController = ModalController(this, exerciseController)
-    private var exerciseAdapter = ExerciseAdapter(exerciseListItems, exerciseController, modalController)
+    private var exerciseAdapter = ExerciseAdapter(
+        exerciseListItems,
+        exerciseController,
+        modalController
+    )
     private var locationManager = LocationManager()
     private var isTracking = false
 
@@ -78,10 +79,10 @@ class MainActivity : AppCompatActivity() {
     private fun updateLocation(location: Location){
         if (isTracking) {
             trackExerciseButton.text = "Start Tracking"
-            var currentLocationTimeStamp = Pair(location, java.util.Calendar.getInstance().time)
+            var currentLocationTimeStamp = Pair(location, Calendar.getInstance().time)
             createDynamicRun(cachedLocationTimeStamp, currentLocationTimeStamp)
         } else {
-            cachedLocationTimeStamp = Pair(location, java.util.Calendar.getInstance().time)
+            cachedLocationTimeStamp = Pair(location, Calendar.getInstance().time)
             trackExerciseButton.text = "Stop Tracking"
         }
         isTracking = !isTracking
@@ -92,15 +93,14 @@ class MainActivity : AppCompatActivity() {
         lastLocation: Pair<Location, Date>
     ) {
         val distance = firstLocation.first.distanceTo(lastLocation.first)
-        val timeSpentMS = lastLocation.second.time - firstLocation.second.time
-        val timeSpent = timeSpentMS / 1000
+        var different = TimeUnit.MILLISECONDS.toSeconds(lastLocation.second.time - firstLocation.second.time)
 
         val newItem = ExerciseItem(
             id = exerciseListItems.size,
             distance = distance,
-            timeSpent = timeSpent.toFloat(),
+            timeSpent = different.toFloat(),
             FITNESSTYPE = FITNESSTYPE.RUNNING,
-            pace = distance / (timeSpent / 60),
+            pace = distance /  different.toFloat(),
         )
 
         exerciseController.addEntry(newItem)

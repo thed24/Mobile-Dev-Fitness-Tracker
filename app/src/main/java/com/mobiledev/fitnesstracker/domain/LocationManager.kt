@@ -1,4 +1,4 @@
-package com.mobiledev.fitnesstracker
+package com.mobiledev.fitnesstracker.domain
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.mobiledev.fitnesstracker.R
 
 class LocationManager {
     private val debugTag = "MAIN ACTIVITY"

@@ -15,14 +15,14 @@ class ModalController(
     private val context: Context,
     private val exerciseController: ExerciseController
 ) {
-    private val WIDTH = 1000
-    private val HEIGHT = 1250
+    private val width = 1000
+    private val height = 1250
 
     fun callCreateNewEntryForm(exerciseAdapter: ExerciseAdapter) {
         val entryFormDialog = Dialog(context).apply {
             setContentView(R.layout.create_exercise_form)
             setCancelable(false)
-            window?.setLayout(WIDTH, HEIGHT)
+            window?.setLayout(width, height)
         }
 
         val exerciseTypeRadioGroup =
@@ -43,8 +43,7 @@ class ModalController(
                 FITNESSTYPE = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
                     FITNESSTYPE.RUNNING else
                     FITNESSTYPE.WALKING,
-                pace = distanceTxt.text.toString().toFloat() / timeSpentTxt.text.toString()
-                    .toFloat(),
+                pace = distanceTxt.text.toString().toFloat() / timeSpentTxt.text.toString().toFloat(),
             )
 
             exerciseController.addEntry(newItem)
@@ -57,7 +56,7 @@ class ModalController(
         val entryFormDialog = Dialog(context).apply {
             setContentView(R.layout.create_exercise_form)
             setCancelable(false)
-            window?.setLayout(WIDTH, HEIGHT)
+            window?.setLayout(width, height)
         }
 
         val exerciseTypeRadioGroup =
@@ -82,7 +81,7 @@ class ModalController(
                 FITNESSTYPE = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
                     FITNESSTYPE.RUNNING else
                     FITNESSTYPE.WALKING,
-                pace = timeSpentTxt.text.toString().toFloat(),
+                pace = distanceTxt.text.toString().toFloat() / timeSpentTxt.text.toString().toFloat(),
             )
 
             exerciseController.updateEntry(newItem, item.id)
