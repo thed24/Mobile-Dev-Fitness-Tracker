@@ -64,8 +64,11 @@ class ModalController(
         val distanceTxt = entryFormDialog.findViewById<TextView>(R.id.distanceTxt)
         val timeSpentTxt = entryFormDialog.findViewById<TextView>(R.id.timeSpentTxt)
         val submitBtn = entryFormDialog.findViewById<Button>(R.id.submitBtn)
+        val buttonToCheck = if (item.FITNESSTYPE == FITNESSTYPE.RUNNING)
+            R.id.runningRadioBtn else
+            R.id.walkingRadioBtn
 
-        exerciseTypeRadioGroup.check(if (item.FITNESSTYPE == FITNESSTYPE.RUNNING) 0 else 1)
+        exerciseTypeRadioGroup.check(buttonToCheck)
         distanceTxt.text = item.distance.toString()
         timeSpentTxt.text = item.timeSpent.toString()
 
