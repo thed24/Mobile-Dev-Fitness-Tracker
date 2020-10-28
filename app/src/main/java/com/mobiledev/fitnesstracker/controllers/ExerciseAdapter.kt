@@ -1,4 +1,4 @@
-package com.mobiledev.fitnesstracker.domain
+package com.mobiledev.fitnesstracker.controllers
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.mobiledev.fitnesstracker.ExerciseItem
-import com.mobiledev.fitnesstracker.ExerciseItemActivity
+import com.mobiledev.fitnesstracker.activities.ExerciseItemActivity
 import com.mobiledev.fitnesstracker.R
-import com.mobiledev.fitnesstracker.controllers.ExerciseController
-import com.mobiledev.fitnesstracker.controllers.ModalController
+import com.mobiledev.fitnesstracker.domain.ExerciseItem
 
 class ExerciseAdapter(
     private val data: List<ExerciseItem>,

@@ -6,10 +6,9 @@ import android.util.Log
 import android.widget.Button
 import android.widget.RadioGroup
 import android.widget.TextView
-import com.mobiledev.fitnesstracker.ExerciseItem
-import com.mobiledev.fitnesstracker.FITNESSTYPE
+import com.mobiledev.fitnesstracker.domain.ExerciseItem
+import com.mobiledev.fitnesstracker.persistence.ExerciseType
 import com.mobiledev.fitnesstracker.R
-import com.mobiledev.fitnesstracker.domain.ExerciseAdapter
 
 class ModalController(
     private val context: Context,
@@ -40,9 +39,9 @@ class ModalController(
                 id = 0,
                 distance = distanceTxt.text.toString().toFloat(),
                 timeSpent = timeSpentTxt.text.toString().toFloat(),
-                FITNESSTYPE = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
-                    FITNESSTYPE.RUNNING else
-                    FITNESSTYPE.WALKING,
+                ExerciseType = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
+                    ExerciseType.RUNNING else
+                    ExerciseType.WALKING,
                 pace = distanceTxt.text.toString().toFloat() / timeSpentTxt.text.toString().toFloat(),
             )
 
@@ -64,7 +63,7 @@ class ModalController(
         val distanceTxt = entryFormDialog.findViewById<TextView>(R.id.distanceTxt)
         val timeSpentTxt = entryFormDialog.findViewById<TextView>(R.id.timeSpentTxt)
         val submitBtn = entryFormDialog.findViewById<Button>(R.id.submitBtn)
-        val buttonToCheck = if (item.FITNESSTYPE == FITNESSTYPE.RUNNING)
+        val buttonToCheck = if (item.ExerciseType == ExerciseType.RUNNING)
             R.id.runningRadioBtn else
             R.id.walkingRadioBtn
 
@@ -81,9 +80,9 @@ class ModalController(
                 id = item.id,
                 distance = distanceTxt.text.toString().toFloat(),
                 timeSpent = timeSpentTxt.text.toString().toFloat(),
-                FITNESSTYPE = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
-                    FITNESSTYPE.RUNNING else
-                    FITNESSTYPE.WALKING,
+                ExerciseType = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
+                    ExerciseType.RUNNING else
+                    ExerciseType.WALKING,
                 pace = distanceTxt.text.toString().toFloat() / timeSpentTxt.text.toString().toFloat(),
             )
 

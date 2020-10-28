@@ -1,6 +1,6 @@
 package com.mobiledev.fitnesstracker.controllers
 
-import com.mobiledev.fitnesstracker.ExerciseItem
+import com.mobiledev.fitnesstracker.domain.ExerciseItem
 
 class ExerciseController(
     private var exerciseListItems: MutableList<ExerciseItem>,
@@ -15,9 +15,8 @@ class ExerciseController(
     }
 
     fun addEntry(newItem: ExerciseItem) {
-        val item = newItem
-        item.id = exerciseListItems.size
-        exerciseListItems.add(item)
+        newItem.id = exerciseListItems.size
+        exerciseListItems.add(newItem)
     }
 
     fun getEntry(itemId: Int): ExerciseItem {

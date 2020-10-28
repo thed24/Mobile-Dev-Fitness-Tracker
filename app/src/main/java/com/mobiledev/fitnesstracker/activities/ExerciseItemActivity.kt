@@ -1,8 +1,10 @@
-package com.mobiledev.fitnesstracker
+package com.mobiledev.fitnesstracker.activities
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.mobiledev.fitnesstracker.R
+import com.mobiledev.fitnesstracker.domain.ExerciseItem
+import kotlinx.android.synthetic.main.exercise_item_details.*
 import java.lang.Float.parseFloat
 import java.util.*
 
@@ -18,25 +20,18 @@ class ExerciseItemActivity : AppCompatActivity() {
         val item = intent.getParcelableExtra("item") as? ExerciseItem
 
         if (item != null) {
-            val distanceAmountTxt = findViewById<TextView>(R.id.distanceAmountTxt)
             val isSingleKm = parseFloat(item.distance.toString()) > 1.00
             distanceAmountTxt.text = if (isSingleKm)
                 item.distance.toString() + " km" else
                 item.distance.toString() + " kms"
 
-            val timeSpentAmountTxt = findViewById<TextView>(R.id.timeSpentAmountTxt)
             val isSingleHour = parseFloat(item.timeSpent.toString()) > 1.00
             timeSpentAmountTxt.text = if (isSingleHour)
                 item.timeSpent.toString() + " minute" else
                 item.timeSpent.toString() + " minutes"
 
-            val fitnessTxt = findViewById<TextView>(R.id.fitnessTxt)
-            fitnessTxt.text = item.FITNESSTYPE.toString().capitalize(Locale.getDefault())
-
-            val paceTxt = findViewById<TextView>(R.id.paceTxt)
+            fitnessTxt.text = item.ExerciseType.toString().capitalize(Locale.getDefault())
             paceTxt.text = item.pace.toString() + " km/h"
-
-            val exerciseIdTxt = findViewById<TextView>(R.id.exerciseIdTxt)
             exerciseIdTxt.text = item.id.toString()
         }
     }

@@ -1,37 +1,25 @@
-package com.mobiledev.fitnesstracker
+package com.mobiledev.fitnesstracker.activities
 
 import android.location.Location
 import android.os.Bundle
-import android.os.Parcelable
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.mobiledev.fitnesstracker.R
 import com.mobiledev.fitnesstracker.controllers.ExerciseController
 import com.mobiledev.fitnesstracker.controllers.ModalController
-import com.mobiledev.fitnesstracker.domain.ExerciseAdapter
-import com.mobiledev.fitnesstracker.domain.LocationManager
-import kotlinx.android.parcel.Parcelize
+import com.mobiledev.fitnesstracker.controllers.ExerciseAdapter
+import com.mobiledev.fitnesstracker.domain.ExerciseItem
+import com.mobiledev.fitnesstracker.persistence.ExerciseType
+import com.mobiledev.fitnesstracker.controllers.LocationManager
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-@Parcelize
-data class ExerciseItem(
-    var id: Int,
-    val distance: Float,
-    val timeSpent: Float,
-    val FITNESSTYPE: FITNESSTYPE,
-    val pace: Float
-) : Parcelable
-
-enum class FITNESSTYPE {
-    WALKING, RUNNING
-}
-
 class MainActivity : AppCompatActivity() {
-    private lateinit var trackExerciseButton: Button
     private lateinit var cachedLocationTimeStamp: Pair<Location, Date>
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -50,14 +38,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val addExerciseButton = findViewById<Button>(R.id.addExerciseBtn)
-        addExerciseButton.setOnClickListener {
+        addExerciseBtn.setOnClickListener {
             modalController.callCreateNewEntryForm(exerciseAdapter)
             exerciseAdapter.notifyDataSetChanged()
         }
 
-        trackExerciseButton = findViewById(R.id.trackerBtn)
-        trackExerciseButton.setOnClickListener {
+        trackerBtn.setOnClickListener {
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
             locationManager.getLastLocation(fusedLocationClient, ::updateLocation)
         }
@@ -78,12 +64,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateLocation(location: Location){
         if (isTracking) {
-            trackExerciseButton.text = "Start Tracking"
+            trackerBtn.text = "Start Tracking"
             var currentLocationTimeStamp = Pair(location, Calendar.getInstance().time)
             createDynamicRun(cachedLocationTimeStamp, currentLocationTimeStamp)
         } else {
             cachedLocationTimeStamp = Pair(location, Calendar.getInstance().time)
-            trackExerciseButton.text = "Stop Tracking"
+            trackerBtn.text = "Stop Tracking"
         }
         isTracking = !isTracking
     }
@@ -99,7 +85,7 @@ class MainActivity : AppCompatActivity() {
             id = exerciseListItems.size,
             distance = distance,
             timeSpent = different.toFloat(),
-            FITNESSTYPE = FITNESSTYPE.RUNNING,
+            ExerciseType = ExerciseType.RUNNING,
             pace = distance /  different.toFloat(),
         )
 

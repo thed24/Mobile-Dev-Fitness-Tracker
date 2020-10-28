@@ -1,4 +1,4 @@
-package com.mobiledev.fitnesstracker.domain
+package com.mobiledev.fitnesstracker.controllers
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -64,7 +64,8 @@ class LocationManager {
         activity: Activity
     ) {
         val snackbar = Snackbar.make(
-            activity.findViewById(android.R.id.content), activity.getString(snackStrId),
+            activity.findViewById(android.R.id.content),
+            activity.getString(snackStrId),
             BaseTransientBottomBar.LENGTH_INDEFINITE
         )
         if (actionStrId != 0 && listener != null) {
