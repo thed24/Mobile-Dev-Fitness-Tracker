@@ -9,12 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mobiledev.fitnesstracker.activities.ExerciseItemActivity
 import com.mobiledev.fitnesstracker.R
+import com.mobiledev.fitnesstracker.activities.Modal
 import com.mobiledev.fitnesstracker.domain.ExerciseItem
 
 class ExerciseAdapter(
-    private val data: List<ExerciseItem>,
     private val exerciseController: ExerciseController,
-    private val modalController: ModalController
+    private val modal: Modal
 ) : RecyclerView.Adapter<ExerciseAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,11 +24,11 @@ class ExerciseAdapter(
         return ViewHolder(view)
     }
 
-    override fun getItemCount() = data.count()
+    override fun getItemCount() = exerciseController.getAllEntries().count()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
-        holder.bind(item, this, exerciseController, modalController)
+        val item = exerciseController.getEntry(position)
+        holder.bind(item, this, exerciseController, modal)
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -41,12 +41,12 @@ class ExerciseAdapter(
             item: ExerciseItem,
             adapter: ExerciseAdapter,
             controller: ExerciseController,
-            modalController: ModalController
+            modal: Modal
         ) {
             rowTextView.text = "Exercise Entry " + item.id.toString()
 
             editExerciseBtn.setOnClickListener {
-                modalController.callUpdateEntryForm(item, adapter)
+                modal.updateEntryForm(item, adapter)
             }
 
             deleteExerciseBtn.setOnClickListener {

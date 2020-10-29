@@ -1,4 +1,4 @@
-package com.mobiledev.fitnesstracker.controllers
+package com.mobiledev.fitnesstracker.activities
 
 import android.app.Dialog
 import android.content.Context
@@ -9,15 +9,17 @@ import android.widget.TextView
 import com.mobiledev.fitnesstracker.domain.ExerciseItem
 import com.mobiledev.fitnesstracker.persistence.ExerciseType
 import com.mobiledev.fitnesstracker.R
+import com.mobiledev.fitnesstracker.controllers.ExerciseAdapter
+import com.mobiledev.fitnesstracker.controllers.ExerciseController
 
-class ModalController(
+class Modal(
     private val context: Context,
     private val exerciseController: ExerciseController
 ) {
     private val width = 1000
     private val height = 1250
 
-    fun callCreateNewEntryForm(exerciseAdapter: ExerciseAdapter) {
+    fun createEntryForm(exerciseAdapter: ExerciseAdapter) {
         val entryFormDialog = Dialog(context).apply {
             setContentView(R.layout.create_exercise_form)
             setCancelable(false)
@@ -51,7 +53,7 @@ class ModalController(
         }
     }
 
-    fun callUpdateEntryForm(item: ExerciseItem, exerciseAdapter: ExerciseAdapter) {
+    fun updateEntryForm(item: ExerciseItem, exerciseAdapter: ExerciseAdapter) {
         val entryFormDialog = Dialog(context).apply {
             setContentView(R.layout.create_exercise_form)
             setCancelable(false)
@@ -86,7 +88,7 @@ class ModalController(
                 pace = distanceTxt.text.toString().toFloat() / timeSpentTxt.text.toString().toFloat(),
             )
 
-            exerciseController.updateEntry(newItem, item.id)
+            exerciseController.updateEntry(newItem)
             entryFormDialog.dismiss()
             exerciseAdapter.notifyDataSetChanged()
         }

@@ -1,29 +1,55 @@
 package com.mobiledev.fitnesstracker.controllers
 
 import com.mobiledev.fitnesstracker.domain.ExerciseItem
+import com.mobiledev.fitnesstracker.domain.ExerciseItemDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
-class ExerciseController(
-    private var exerciseListItems: MutableList<ExerciseItem>,
-) {
-    fun updateEntry(newItem: ExerciseItem, oldItemId: Int) {
-        val oldItem = exerciseListItems.find { exercise ->
-            exercise.id == oldItemId
+class ExerciseController @Inject constructor (var exerciseItemDao: ExerciseItemDao) : BaseController<ExerciseItem> {
+
+    override fun updateEntry(item: ExerciseItem) {
+        runBlocking {
+            val job = launch(Dispatchers.Default) {
+                exerciseItemDao.update(item)
+            }
         }
-        if (oldItem != null) {
-            exerciseListItems[exerciseListItems.indexOf(oldItem)] = newItem
+    }
+
+    override fun addEntry(item: ExerciseItem) {
+        runBlocking {
+            val job = launch(Dispatchers.Default) {
+                exerciseItemDao.insert(item)
+            }
         }
     }
 
-    fun addEntry(newItem: ExerciseItem) {
-        newItem.id = exerciseListItems.size
-        exerciseListItems.add(newItem)
+    override fun getEntry(itemId: Int): ExerciseItem {
+        lateinit var item: ExerciseItem
+        runBlocking {
+            val job = launch(Dispatchers.Default) {
+                item = exerciseItemDao.getById(itemId)
+            }
+        }
+        return item
     }
 
-    fun getEntry(itemId: Int): ExerciseItem {
-        return exerciseListItems[itemId]
+    override fun getAllEntries(): List<ExerciseItem> {
+        var items = emptyList<ExerciseItem>()
+        runBlocking {
+            val job = launch(Dispatchers.Default) {
+                items = exerciseItemDao.getAll()
+            }
+        }
+        return items
     }
 
-    fun removeEntry(item: ExerciseItem) {
-        exerciseListItems.remove(item)
+    override fun removeEntry(item: ExerciseItem) {
+        runBlocking {
+            val job = launch(Dispatchers.Default) {
+                exerciseItemDao.delete(item)
+            }
+        }
     }
 }
