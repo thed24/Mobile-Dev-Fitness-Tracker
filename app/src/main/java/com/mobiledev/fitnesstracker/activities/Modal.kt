@@ -11,27 +11,20 @@ import com.mobiledev.fitnesstracker.persistence.ExerciseType
 import com.mobiledev.fitnesstracker.R
 import com.mobiledev.fitnesstracker.controllers.ExerciseAdapter
 import com.mobiledev.fitnesstracker.controllers.ExerciseController
+import javax.inject.Inject
 
-class Modal(
-    private val context: Context,
+class Modal @Inject constructor(
+    private var context: Context,
     private val exerciseController: ExerciseController
 ) {
-    private val width = 1000
-    private val height = 1250
+    private lateinit var exerciseTypeRadioGroup: RadioGroup
+    private lateinit var timeSpentTxt: TextView
+    private lateinit var distanceTxt: TextView
+    private lateinit var submitBtn: Button
+    private lateinit var entryFormDialog: Dialog
 
     fun createEntryForm(exerciseAdapter: ExerciseAdapter) {
-        val entryFormDialog = Dialog(context).apply {
-            setContentView(R.layout.create_exercise_form)
-            setCancelable(false)
-            window?.setLayout(width, height)
-        }
-
-        val exerciseTypeRadioGroup =
-            entryFormDialog.findViewById<RadioGroup>(R.id.exerciseTypeRadioGroup)
-        val distanceTxt = entryFormDialog.findViewById<TextView>(R.id.distanceTxt)
-        val timeSpentTxt = entryFormDialog.findViewById<TextView>(R.id.timeSpentTxt)
-        val submitBtn = entryFormDialog.findViewById<Button>(R.id.submitBtn)
-
+        drawModal()
         entryFormDialog.show()
 
         submitBtn.setOnClickListener {
@@ -44,7 +37,7 @@ class Modal(
                 ExerciseType = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
                     ExerciseType.RUNNING else
                     ExerciseType.WALKING,
-                pace = distanceTxt.text.toString().toFloat() / timeSpentTxt.text.toString().toFloat(),
+                pace = timeSpentTxt.text.toString().toFloat() / distanceTxt.text.toString().toFloat(),
             )
 
             exerciseController.addEntry(newItem)
@@ -54,18 +47,9 @@ class Modal(
     }
 
     fun updateEntryForm(item: ExerciseItem, exerciseAdapter: ExerciseAdapter) {
-        val entryFormDialog = Dialog(context).apply {
-            setContentView(R.layout.create_exercise_form)
-            setCancelable(false)
-            window?.setLayout(width, height)
-        }
+        drawModal()
 
-        val exerciseTypeRadioGroup =
-            entryFormDialog.findViewById<RadioGroup>(R.id.exerciseTypeRadioGroup)
-        val distanceTxt = entryFormDialog.findViewById<TextView>(R.id.distanceTxt)
-        val timeSpentTxt = entryFormDialog.findViewById<TextView>(R.id.timeSpentTxt)
-        val submitBtn = entryFormDialog.findViewById<Button>(R.id.submitBtn)
-        val buttonToCheck = if (item.ExerciseType == ExerciseType.RUNNING)
+        var buttonToCheck = if (item.ExerciseType == ExerciseType.RUNNING)
             R.id.runningRadioBtn else
             R.id.walkingRadioBtn
 
@@ -76,21 +60,33 @@ class Modal(
         entryFormDialog.show()
 
         submitBtn.setOnClickListener {
-            Log.d("UPDATE_EXERCISE_ITEM", distanceTxt.text.toString())
+            item.distance = distanceTxt.text.toString().toFloat()
+            item.timeSpent = timeSpentTxt.text.toString().toFloat()
+            item.ExerciseType = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
+                ExerciseType.RUNNING else
+                ExerciseType.WALKING
+            item.pace = timeSpentTxt.text.toString().toFloat() / distanceTxt.text.toString().toFloat()
 
-            val newItem = ExerciseItem(
-                id = item.id,
-                distance = distanceTxt.text.toString().toFloat(),
-                timeSpent = timeSpentTxt.text.toString().toFloat(),
-                ExerciseType = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
-                    ExerciseType.RUNNING else
-                    ExerciseType.WALKING,
-                pace = distanceTxt.text.toString().toFloat() / timeSpentTxt.text.toString().toFloat(),
-            )
-
-            exerciseController.updateEntry(newItem)
+            exerciseController.updateEntry(item)
             entryFormDialog.dismiss()
             exerciseAdapter.notifyDataSetChanged()
         }
+    }
+
+    fun setContext(context: Context){
+        this.context = context
+    }
+
+    private fun drawModal(){
+        entryFormDialog = Dialog(context).apply {
+            setContentView(R.layout.create_exercise_form)
+            setCancelable(false)
+            window?.setLayout(1000, 1250)
+        }
+
+        exerciseTypeRadioGroup = entryFormDialog.findViewById(R.id.exerciseTypeRadioGroup)
+        distanceTxt = entryFormDialog.findViewById(R.id.distanceTxt)
+        timeSpentTxt = entryFormDialog.findViewById(R.id.timeSpentTxt)
+        submitBtn = entryFormDialog.findViewById(R.id.submitBtn)
     }
 }

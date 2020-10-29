@@ -44,12 +44,6 @@ class MainActivityModule(context: Context) {
 
     @Provides
     @Singleton
-    fun providesModal(exerciseController: ExerciseController): Modal {
-        return Modal(context, exerciseController)
-    }
-
-    @Provides
-    @Singleton
     fun providesExerciseAdapter(exerciseController: ExerciseController, modal: Modal): ExerciseAdapter {
         return ExerciseAdapter(exerciseController, modal)
     }

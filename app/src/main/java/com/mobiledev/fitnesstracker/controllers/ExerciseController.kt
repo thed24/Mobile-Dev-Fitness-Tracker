@@ -5,6 +5,7 @@ import com.mobiledev.fitnesstracker.domain.ExerciseItemDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ExerciseController @Inject constructor (var exerciseItemDao: ExerciseItemDao) : BaseController<ExerciseItem> {
@@ -26,23 +27,19 @@ class ExerciseController @Inject constructor (var exerciseItemDao: ExerciseItemD
     }
 
     override fun getEntry(itemId: Int): ExerciseItem {
-        lateinit var item: ExerciseItem
-        runBlocking {
-            val job = launch(Dispatchers.Default) {
-                item = exerciseItemDao.getById(itemId)
+        return runBlocking {
+            withContext(Dispatchers.Default) {
+                getEntryAsync(itemId)
             }
         }
-        return item
     }
 
     override fun getAllEntries(): List<ExerciseItem> {
-        var items = emptyList<ExerciseItem>()
-        runBlocking {
-            val job = launch(Dispatchers.Default) {
-                items = exerciseItemDao.getAll()
+        return runBlocking {
+            withContext(Dispatchers.Default) {
+                getAllEntriesAsync()
             }
         }
-        return items
     }
 
     override fun removeEntry(item: ExerciseItem) {
@@ -51,5 +48,13 @@ class ExerciseController @Inject constructor (var exerciseItemDao: ExerciseItemD
                 exerciseItemDao.delete(item)
             }
         }
+    }
+
+    private suspend fun getEntryAsync(itemId: Int): ExerciseItem {
+        return exerciseItemDao.getById(itemId)
+    }
+
+    private suspend fun getAllEntriesAsync(): List<ExerciseItem> {
+        return exerciseItemDao.getAll()
     }
 }

@@ -10,10 +10,10 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity
 data class ExerciseItem(
-    @PrimaryKey var id: Int,
-    @ColumnInfo(name = "distance")val distance: Float,
-    @ColumnInfo(name = "time_spent")val timeSpent: Float,
-    @ColumnInfo(name = "exercise_type")val ExerciseType: ExerciseType,
-    @ColumnInfo(name = "pace")val pace: Float
+    @PrimaryKey(autoGenerate = true) var id: Int,
+    @ColumnInfo(name = "distance") var distance: Float,
+    @ColumnInfo(name = "time_spent") var timeSpent: Float,
+    @ColumnInfo(name = "exercise_type") var ExerciseType: ExerciseType,
+    @ColumnInfo(name = "pace") var pace: Float
 ) : Parcelable
 

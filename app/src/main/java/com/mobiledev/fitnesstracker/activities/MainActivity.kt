@@ -24,9 +24,8 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var exerciseController: ExerciseController
     @Inject
-    lateinit var modal: Modal
-    @Inject
     lateinit var exerciseAdapter: ExerciseAdapter
+    lateinit var modal: Modal
 
     private lateinit var cachedLocationTimeStamp: Pair<Location, Date>
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -36,8 +35,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         FitnessTracker.mainActivityComponent.inject(this)
+        modal = Modal(this, exerciseController)
 
         addExerciseBtn.setOnClickListener {
             modal.createEntryForm(exerciseAdapter)

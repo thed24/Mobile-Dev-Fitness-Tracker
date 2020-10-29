@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CursorAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.mobiledev.fitnesstracker.activities.ExerciseItemActivity
 import com.mobiledev.fitnesstracker.R
+import com.mobiledev.fitnesstracker.activities.ExerciseItemActivity
 import com.mobiledev.fitnesstracker.activities.Modal
 import com.mobiledev.fitnesstracker.domain.ExerciseItem
 
@@ -16,7 +17,6 @@ class ExerciseAdapter(
     private val exerciseController: ExerciseController,
     private val modal: Modal
 ) : RecyclerView.Adapter<ExerciseAdapter.ViewHolder>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.exercise_item, parent, false) as View
@@ -27,7 +27,7 @@ class ExerciseAdapter(
     override fun getItemCount() = exerciseController.getAllEntries().count()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = exerciseController.getEntry(position)
+        val item = exerciseController.getAllEntries()[position]
         holder.bind(item, this, exerciseController, modal)
     }
 
@@ -46,6 +46,7 @@ class ExerciseAdapter(
             rowTextView.text = "Exercise Entry " + item.id.toString()
 
             editExerciseBtn.setOnClickListener {
+                modal.setContext(view.context)
                 modal.updateEntryForm(item, adapter)
             }
 
