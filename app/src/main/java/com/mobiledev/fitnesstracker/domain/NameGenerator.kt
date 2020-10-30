@@ -7,7 +7,7 @@ class NameGenerator {
     fun createName(item: ExerciseItem) : String {
         var name = createPace(item.pace, item.ExerciseType)
         name += createDistance(item.distance)
-        return name
+        return "\"$name\""
         }
 
     private fun createPace(pace: Float, exerciseType: ExerciseType): String {

@@ -22,8 +22,10 @@ class LocationManager {
         fusedLocationClient.lastLocation.addOnCompleteListener { taskLocation ->
             if (taskLocation.isSuccessful && taskLocation.result != null) {
                 val location = taskLocation.result
-                if (location != null)
+                if (location != null) {
                     locationFunction(location)
+                    fusedLocationClient.flushLocations()
+                }
             } else {
                 Log.d(debugTag, taskLocation.exception.toString())
             }

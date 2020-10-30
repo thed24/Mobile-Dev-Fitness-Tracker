@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Fitness Tracker</string>
-    <string name="titleText">Exercise Tracker</string>
+    <string name="titleText">Fitness Tracker</string>
     <string name="add_new_entry">Add New Entry</string>
     <string name="new_fitness_entry_title">New Fitness Entry</string>
-    <string name="fitness_type_text">Fitness Type</string>
+    <string name="fitness_type_text">Exercise Type</string>
     <string name="walking_btn">Walking</string>
     <string name="running_btn">Running</string>
     <string name="distance_txt">Distance (km)</string>
@@ -17,8 +17,7 @@
     <string name="editBtn">Edit</string>
     <string name="deleteBtn">Delete</string>
     <string name="track_exercise_btn">Track Exercise</string>
-    <string name="permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>
     <string name="settings">Settings</string>
     <string name="permission_rationale">Location services are required, permission denied.</string>
-    <string name="no_location_detected">No location detected. Make sure location is enabled on the device.</string>
+    <string name="exercise_description">Exercise Description</string>
 </resources>
