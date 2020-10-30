@@ -12,6 +12,7 @@ import com.mobiledev.fitnesstracker.R
 import com.mobiledev.fitnesstracker.activities.ExerciseItemActivity
 import com.mobiledev.fitnesstracker.activities.Modal
 import com.mobiledev.fitnesstracker.domain.ExerciseItem
+import com.mobiledev.fitnesstracker.persistence.ExerciseType
 
 class ExerciseAdapter(
     private val exerciseController: ExerciseController,
@@ -43,7 +44,10 @@ class ExerciseAdapter(
             controller: ExerciseController,
             modal: Modal
         ) {
-            rowTextView.text = "Exercise Entry " + item.id.toString()
+            var exerciseType = if (item.ExerciseType == ExerciseType.RUNNING)
+                "Run: " else
+                "Walk: "
+            rowTextView.text = exerciseType + item.timeStamp
 
             editExerciseBtn.setOnClickListener {
                 modal.setContext(view.context)

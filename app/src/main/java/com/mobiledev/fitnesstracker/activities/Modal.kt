@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.RadioGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.mobiledev.fitnesstracker.domain.ExerciseItem
 import com.mobiledev.fitnesstracker.persistence.ExerciseType
 import com.mobiledev.fitnesstracker.R
@@ -22,32 +23,40 @@ class Modal @Inject constructor(
     private lateinit var distanceTxt: TextView
     private lateinit var submitBtn: Button
     private lateinit var entryFormDialog: Dialog
+    private lateinit var titleTxt: TextView
 
     fun createEntryForm(exerciseAdapter: ExerciseAdapter) {
         drawModal()
         entryFormDialog.show()
 
         submitBtn.setOnClickListener {
-            Log.d("NEW_EXERCISE_ITEM", distanceTxt.text.toString())
+            if (isInvalidTextField()) {
+                Toast.makeText(context, "Error, distance or time spent is empty!", Toast.LENGTH_SHORT).show()
+            } else {
+                val newItem = ExerciseItem(
+                    id = 0,
+                    distance = distanceTxt.text.toString().toFloat(),
+                    timeSpent = timeSpentTxt.text.toString().toFloat(),
+                    ExerciseType = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
+                        ExerciseType.RUNNING else
+                        ExerciseType.WALKING,
+                    pace = timeSpentTxt.text.toString().toFloat() / distanceTxt.text.toString().toFloat()
+                )
 
-            val newItem = ExerciseItem(
-                id = 0,
-                distance = distanceTxt.text.toString().toFloat(),
-                timeSpent = timeSpentTxt.text.toString().toFloat(),
-                ExerciseType = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
-                    ExerciseType.RUNNING else
-                    ExerciseType.WALKING,
-                pace = timeSpentTxt.text.toString().toFloat() / distanceTxt.text.toString().toFloat(),
-            )
-
-            exerciseController.addEntry(newItem)
-            entryFormDialog.dismiss()
-            exerciseAdapter.notifyDataSetChanged()
+                if (isInvalidEntry(newItem)) {
+                    Toast.makeText(context, "Error, invalid distance or time spent!", Toast.LENGTH_SHORT).show()
+                } else {
+                    exerciseController.addEntry(newItem)
+                    entryFormDialog.dismiss()
+                    exerciseAdapter.notifyDataSetChanged()
+                }
+            }
         }
     }
 
     fun updateEntryForm(item: ExerciseItem, exerciseAdapter: ExerciseAdapter) {
         drawModal()
+        titleTxt.text = "Update Entry"
 
         var buttonToCheck = if (item.ExerciseType == ExerciseType.RUNNING)
             R.id.runningRadioBtn else
@@ -60,16 +69,29 @@ class Modal @Inject constructor(
         entryFormDialog.show()
 
         submitBtn.setOnClickListener {
-            item.distance = distanceTxt.text.toString().toFloat()
-            item.timeSpent = timeSpentTxt.text.toString().toFloat()
-            item.ExerciseType = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
-                ExerciseType.RUNNING else
-                ExerciseType.WALKING
-            item.pace = timeSpentTxt.text.toString().toFloat() / distanceTxt.text.toString().toFloat()
+            if (isInvalidTextField()) {
+                Toast.makeText(context, "Error, distance or time spent is empty!", Toast.LENGTH_SHORT).show()
+            } else {
+                item.distance = distanceTxt.text.toString().toFloat()
+                item.timeSpent = timeSpentTxt.text.toString().toFloat()
+                item.ExerciseType = if (exerciseTypeRadioGroup.checkedRadioButtonId == 0)
+                    ExerciseType.RUNNING else
+                    ExerciseType.WALKING
+                item.pace =
+                    timeSpentTxt.text.toString().toFloat() / distanceTxt.text.toString().toFloat()
 
-            exerciseController.updateEntry(item)
-            entryFormDialog.dismiss()
-            exerciseAdapter.notifyDataSetChanged()
+                if (isInvalidEntry(item)) {
+                    Toast.makeText(
+                        context,
+                        "Error, invalid distance or time spent!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    exerciseController.updateEntry(item)
+                    entryFormDialog.dismiss()
+                    exerciseAdapter.notifyDataSetChanged()
+                }
+            }
         }
     }
 
@@ -88,5 +110,14 @@ class Modal @Inject constructor(
         distanceTxt = entryFormDialog.findViewById(R.id.distanceTxt)
         timeSpentTxt = entryFormDialog.findViewById(R.id.timeSpentTxt)
         submitBtn = entryFormDialog.findViewById(R.id.submitBtn)
+        titleTxt = entryFormDialog.findViewById(R.id.titleTxt)
+    }
+
+    private fun isInvalidTextField() : Boolean {
+        return distanceTxt.text.isEmpty() || timeSpentTxt.text.isEmpty()
+    }
+
+    private fun isInvalidEntry(item: ExerciseItem) : Boolean {
+        return item.timeSpent.toDouble() == 0.0 || item.distance.toDouble() == 0.0
     }
 }

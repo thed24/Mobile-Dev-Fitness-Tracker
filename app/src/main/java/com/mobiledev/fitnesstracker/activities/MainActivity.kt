@@ -13,9 +13,10 @@ import com.mobiledev.fitnesstracker.controllers.ExerciseAdapter
 import com.mobiledev.fitnesstracker.controllers.ExerciseController
 import com.mobiledev.fitnesstracker.controllers.LocationManager
 import com.mobiledev.fitnesstracker.domain.ExerciseItem
-import com.mobiledev.fitnesstracker.domain.ExerciseItemDao
 import com.mobiledev.fitnesstracker.persistence.ExerciseType
 import kotlinx.android.synthetic.main.activity_main.*
+import java.time.Instant
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -82,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         var different = TimeUnit.MILLISECONDS.toSeconds(lastLocation.second.time - firstLocation.second.time)
 
         val newItem = ExerciseItem(
-            id = exerciseController.getAllEntries().size,
+            id = 0,
             distance = distance,
             timeSpent = different.toFloat(),
             ExerciseType = ExerciseType.RUNNING,

@@ -12,7 +12,7 @@ class ExerciseController @Inject constructor (var exerciseItemDao: ExerciseItemD
 
     override fun updateEntry(item: ExerciseItem) {
         runBlocking {
-            val job = launch(Dispatchers.Default) {
+            launch(Dispatchers.Default) {
                 exerciseItemDao.update(item)
             }
         }
@@ -20,7 +20,7 @@ class ExerciseController @Inject constructor (var exerciseItemDao: ExerciseItemD
 
     override fun addEntry(item: ExerciseItem) {
         runBlocking {
-            val job = launch(Dispatchers.Default) {
+            launch(Dispatchers.Default) {
                 exerciseItemDao.insert(item)
             }
         }
@@ -44,7 +44,7 @@ class ExerciseController @Inject constructor (var exerciseItemDao: ExerciseItemD
 
     override fun removeEntry(item: ExerciseItem) {
         runBlocking {
-            val job = launch(Dispatchers.Default) {
+            launch(Dispatchers.Default) {
                 exerciseItemDao.delete(item)
             }
         }

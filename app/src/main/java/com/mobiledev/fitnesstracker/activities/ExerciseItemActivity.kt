@@ -4,12 +4,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mobiledev.fitnesstracker.R
 import com.mobiledev.fitnesstracker.domain.ExerciseItem
+import com.mobiledev.fitnesstracker.domain.NameGenerator
 import kotlinx.android.synthetic.main.exercise_item_details.*
 import java.lang.Float.parseFloat
 import java.util.*
 
 
 class ExerciseItemActivity : AppCompatActivity() {
+
+    private var nameGenerator = NameGenerator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +35,7 @@ class ExerciseItemActivity : AppCompatActivity() {
 
             fitnessTxt.text = item.ExerciseType.toString().capitalize(Locale.getDefault())
             paceTxt.text = item.pace.toString() + " km/h"
-            exerciseIdTxt.text = item.id.toString()
+            exerciseDescriptionTxt.text = nameGenerator.createName(item)
         }
     }
 }
