@@ -1,5 +1,6 @@
 package com.mobiledev.fitnesstracker.controllers
 
+import com.mobiledev.fitnesstracker.domain.BaseDao
 import com.mobiledev.fitnesstracker.domain.ExerciseItem
 import com.mobiledev.fitnesstracker.domain.ExerciseItemDao
 import kotlinx.coroutines.Dispatchers
@@ -8,7 +9,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ExerciseController @Inject constructor(var exerciseItemDao: ExerciseItemDao) :
+class ExerciseController @Inject constructor(var exerciseItemDao: BaseDao<ExerciseItem>) :
     BaseController<ExerciseItem> {
 
     override fun updateEntry(item: ExerciseItem) {
@@ -51,11 +52,11 @@ class ExerciseController @Inject constructor(var exerciseItemDao: ExerciseItemDa
         }
     }
 
-    private suspend fun getEntryAsync(itemId: Int): ExerciseItem {
+    private fun getEntryAsync(itemId: Int): ExerciseItem {
         return exerciseItemDao.getById(itemId)
     }
 
-    private suspend fun getAllEntriesAsync(): List<ExerciseItem> {
+    private fun getAllEntriesAsync(): List<ExerciseItem> {
         return exerciseItemDao.getAll()
     }
 }

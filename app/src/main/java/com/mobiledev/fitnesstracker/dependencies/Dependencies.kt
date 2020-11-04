@@ -17,49 +17,38 @@ import javax.inject.Singleton
 
 @Module
 class MainActivityModule(context: Context) {
-    private val context: Context = context
-
+    private val context = context
     private val database = Room.databaseBuilder(
         context,
         SQLExerciseItemRepository::class.java, "exercise-item-database"
     ).build()
 
-    @Provides
-    @Singleton
-    fun provideSQLExerciseItemRepository(): SQLExerciseItemRepository {
-        return database
-    }
+    private val exerciseItemDao = database.exerciseItemDao()
 
     @Provides
     @Singleton
-    fun provideExerciseItemDao(): ExerciseItemDao {
-        return database.exerciseItemDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideExerciseController(exerciseItemDao: ExerciseItemDao): BaseController<ExerciseItem> {
+    fun provideExerciseController(): BaseController<ExerciseItem> {
         return ExerciseController(exerciseItemDao)
     }
 
     @Provides
     @Singleton
-    fun providesExerciseAdapter(
-        exerciseController: ExerciseController,
-        modal: Modal
-    ): ExerciseAdapter {
-        return ExerciseAdapter(exerciseController, modal)
+    fun provideModal(): Modal {
+        var exerciseController = provideExerciseController()
+        return Modal(context, exerciseController)
     }
 
     @Provides
-    fun context(): Context {
-        return context
+    @Singleton
+    fun provideExerciseAdapter(): ExerciseAdapter {
+        val modal = provideModal()
+        var exerciseController = provideExerciseController()
+        return ExerciseAdapter(exerciseController, modal)
     }
 }
 
 @Component(modules = [MainActivityModule::class])
 @Singleton
 interface MainActivityComponent {
-    fun context(): Context?
     fun inject(mainActivity: MainActivity?)
 }

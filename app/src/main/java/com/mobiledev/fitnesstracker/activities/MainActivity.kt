@@ -9,6 +9,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.mobiledev.fitnesstracker.FitnessTracker
 import com.mobiledev.fitnesstracker.R
+import com.mobiledev.fitnesstracker.controllers.BaseController
 import com.mobiledev.fitnesstracker.controllers.ExerciseAdapter
 import com.mobiledev.fitnesstracker.controllers.ExerciseController
 import com.mobiledev.fitnesstracker.controllers.LocationManager
@@ -20,12 +21,9 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
-    @Inject
-    lateinit var exerciseController: ExerciseController
-
-    @Inject
-    lateinit var exerciseAdapter: ExerciseAdapter
-    lateinit var modal: Modal
+    @Inject lateinit var exerciseController: BaseController<ExerciseItem>
+    @Inject lateinit var exerciseAdapter: ExerciseAdapter
+    @Inject lateinit var modal: Modal
 
     private lateinit var cachedLocationTimeStamp: Pair<Location, Date>
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -36,7 +34,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         FitnessTracker.mainActivityComponent.inject(this)
-        modal = Modal(this, exerciseController)
+        var context = this
+
+        modal.setContext(context)
 
         addExerciseBtn.setOnClickListener {
             modal.createEntryForm(exerciseAdapter)
@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
             locationManager.getLastLocation(fusedLocationClient, ::updateLocation)
         }
 
-        var context = this
         findViewById<RecyclerView>(R.id.exerciseList).apply {
             adapter = exerciseAdapter
             layoutManager = LinearLayoutManager(context)

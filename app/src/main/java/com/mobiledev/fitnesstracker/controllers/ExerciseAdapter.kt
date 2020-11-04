@@ -12,9 +12,10 @@ import com.mobiledev.fitnesstracker.activities.ExerciseItemActivity
 import com.mobiledev.fitnesstracker.activities.Modal
 import com.mobiledev.fitnesstracker.domain.ExerciseItem
 import com.mobiledev.fitnesstracker.persistence.ExerciseType
+import javax.inject.Inject
 
-class ExerciseAdapter(
-    private val exerciseController: ExerciseController,
+class ExerciseAdapter @Inject constructor(
+    private val exerciseController: BaseController<ExerciseItem>,
     private val modal: Modal
 ) : RecyclerView.Adapter<ExerciseAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,7 +41,7 @@ class ExerciseAdapter(
         fun bind(
             item: ExerciseItem,
             adapter: ExerciseAdapter,
-            controller: ExerciseController,
+            controller: BaseController<ExerciseItem>,
             modal: Modal
         ) {
             var exerciseType = if (item.exerciseType == ExerciseType.RUNNING)

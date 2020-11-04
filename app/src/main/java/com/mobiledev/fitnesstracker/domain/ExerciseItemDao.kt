@@ -6,8 +6,8 @@ import androidx.room.Query
 @Dao
 interface ExerciseItemDao : BaseDao<ExerciseItem> {
     @Query("SELECT * FROM ExerciseItem")
-    fun getAll(): List<ExerciseItem>
+    override fun getAll(): List<ExerciseItem>
 
     @Query("SELECT * FROM ExerciseItem WHERE id LIKE :id")
-    fun getById(id: Int): ExerciseItem
+    override fun getById(id: Int): ExerciseItem
 }

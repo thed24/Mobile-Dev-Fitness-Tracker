@@ -7,6 +7,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.mobiledev.fitnesstracker.R
+import com.mobiledev.fitnesstracker.controllers.BaseController
 import com.mobiledev.fitnesstracker.controllers.ExerciseAdapter
 import com.mobiledev.fitnesstracker.controllers.ExerciseController
 import com.mobiledev.fitnesstracker.domain.ExerciseItem
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 class Modal @Inject constructor(
     private var context: Context,
-    private val exerciseController: ExerciseController
+    private val exerciseController: BaseController<ExerciseItem>
 ) {
     private lateinit var exerciseTypeRadioGroup: RadioGroup
     private lateinit var timeSpentTxt: TextView
