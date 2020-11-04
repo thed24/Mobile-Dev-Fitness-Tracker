@@ -24,7 +24,7 @@ class Modal @Inject constructor(
     private lateinit var entryFormDialog: Dialog
     private lateinit var titleTxt: TextView
 
-    private val runningId = 0
+    private val runningId = R.id.runningRadioBtn
     private val defaultId = 0
 
     fun createEntryForm(exerciseAdapter: ExerciseAdapter) {
