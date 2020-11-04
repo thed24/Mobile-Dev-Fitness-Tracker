@@ -15,8 +15,6 @@ import com.mobiledev.fitnesstracker.controllers.LocationManager
 import com.mobiledev.fitnesstracker.domain.ExerciseItem
 import com.mobiledev.fitnesstracker.persistence.ExerciseType
 import kotlinx.android.synthetic.main.activity_main.*
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -24,6 +22,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var exerciseController: ExerciseController
+
     @Inject
     lateinit var exerciseAdapter: ExerciseAdapter
     lateinit var modal: Modal
@@ -63,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateLocation(location: Location){
+    private fun updateLocation(location: Location) {
         if (isTracking) {
             trackerBtn.text = "Start Tracking"
             var currentLocationTimeStamp = Pair(location, Calendar.getInstance().time)
@@ -80,14 +79,15 @@ class MainActivity : AppCompatActivity() {
         lastLocation: Pair<Location, Date>
     ) {
         val distance = firstLocation.first.distanceTo(lastLocation.first)
-        var different = TimeUnit.MILLISECONDS.toSeconds(lastLocation.second.time - firstLocation.second.time)
+        var different =
+            TimeUnit.MILLISECONDS.toSeconds(lastLocation.second.time - firstLocation.second.time)
 
         val newItem = ExerciseItem(
             id = 0,
             distance = distance,
             timeSpent = different.toFloat(),
-            ExerciseType = ExerciseType.RUNNING,
-            pace = distance /  different.toFloat(),
+            exerciseType = ExerciseType.RUNNING,
+            pace = distance / different.toFloat(),
         )
 
         exerciseController.addEntry(newItem)

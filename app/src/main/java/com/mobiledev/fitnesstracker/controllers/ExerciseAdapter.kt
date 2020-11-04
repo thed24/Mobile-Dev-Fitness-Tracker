@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.CursorAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mobiledev.fitnesstracker.R
@@ -44,7 +43,7 @@ class ExerciseAdapter(
             controller: ExerciseController,
             modal: Modal
         ) {
-            var exerciseType = if (item.ExerciseType == ExerciseType.RUNNING)
+            var exerciseType = if (item.exerciseType == ExerciseType.RUNNING)
                 "Run: " else
                 "Walk: "
             rowTextView.text = exerciseType + item.timeStamp

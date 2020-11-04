@@ -1,7 +1,5 @@
 package com.mobiledev.fitnesstracker.controllers
 
-import com.mobiledev.fitnesstracker.domain.ExerciseItem
-
 interface BaseController<T> {
     fun updateEntry(item: T)
 

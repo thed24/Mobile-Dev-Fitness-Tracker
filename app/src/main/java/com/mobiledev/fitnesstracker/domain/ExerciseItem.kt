@@ -8,7 +8,6 @@ import com.mobiledev.fitnesstracker.persistence.ExerciseType
 import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
-import java.util.*
 
 
 @Parcelize
@@ -17,7 +16,7 @@ data class ExerciseItem(
     @PrimaryKey(autoGenerate = true) var id: Int,
     @ColumnInfo(name = "distance") var distance: Float,
     @ColumnInfo(name = "time_spent") var timeSpent: Float,
-    @ColumnInfo(name = "exercise_type") var ExerciseType: ExerciseType,
+    @ColumnInfo(name = "exercise_type") var exerciseType: ExerciseType,
     @ColumnInfo(name = "pace") var pace: Float,
     @ColumnInfo(name = "time_stamp") val timeStamp: String? = getDateTime()
 ) : Parcelable
@@ -31,7 +30,9 @@ private fun getDateTime(): String? {
 }
 
 private fun getDayNumberSuffix(day: Int): String {
-    return if (day in 11..13) {
+    val thDayRange = 11..13
+
+    return if (day in thDayRange) {
         "th"
     } else when (day % 10) {
         1 -> "st"

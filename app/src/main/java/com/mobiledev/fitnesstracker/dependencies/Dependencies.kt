@@ -27,7 +27,7 @@ class MainActivityModule(context: Context) {
     @Provides
     @Singleton
     fun provideSQLExerciseItemRepository(): SQLExerciseItemRepository {
-        return database;
+        return database
     }
 
     @Provides
@@ -44,7 +44,10 @@ class MainActivityModule(context: Context) {
 
     @Provides
     @Singleton
-    fun providesExerciseAdapter(exerciseController: ExerciseController, modal: Modal): ExerciseAdapter {
+    fun providesExerciseAdapter(
+        exerciseController: ExerciseController,
+        modal: Modal
+    ): ExerciseAdapter {
         return ExerciseAdapter(exerciseController, modal)
     }
 

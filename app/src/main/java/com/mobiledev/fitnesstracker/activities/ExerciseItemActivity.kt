@@ -13,6 +13,7 @@ import java.util.*
 class ExerciseItemActivity : AppCompatActivity() {
 
     private var nameGenerator = NameGenerator()
+    private val oneUnit = 1.00
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,17 +24,17 @@ class ExerciseItemActivity : AppCompatActivity() {
         val item = intent.getParcelableExtra("item") as? ExerciseItem
 
         if (item != null) {
-            val isSingleKm = parseFloat(item.distance.toString()) > 1.00
+            val isSingleKm = parseFloat(item.distance.toString()) > oneUnit
             distanceAmountTxt.text = if (isSingleKm)
                 item.distance.toString() + " km" else
                 item.distance.toString() + " kms"
 
-            val isSingleHour = parseFloat(item.timeSpent.toString()) > 1.00
+            val isSingleHour = parseFloat(item.timeSpent.toString()) > oneUnit
             timeSpentAmountTxt.text = if (isSingleHour)
                 item.timeSpent.toString() + " minute" else
                 item.timeSpent.toString() + " minutes"
 
-            fitnessTxt.text = item.ExerciseType.toString().capitalize(Locale.getDefault())
+            fitnessTxt.text = item.exerciseType.toString().capitalize(Locale.getDefault())
             paceTxt.text = item.pace.toString() + " km/h"
             exerciseDescriptionTxt.text = nameGenerator.createName(item)
         }

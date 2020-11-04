@@ -8,7 +8,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ExerciseController @Inject constructor (var exerciseItemDao: ExerciseItemDao) : BaseController<ExerciseItem> {
+class ExerciseController @Inject constructor(var exerciseItemDao: ExerciseItemDao) :
+    BaseController<ExerciseItem> {
 
     override fun updateEntry(item: ExerciseItem) {
         runBlocking {

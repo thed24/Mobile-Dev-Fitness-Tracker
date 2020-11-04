@@ -3,8 +3,6 @@ package com.mobiledev.fitnesstracker.controllers
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Looper
@@ -14,15 +12,15 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.mobiledev.fitnesstracker.R
 
-
 class LocationManager {
     private val debugTag = "MAIN ACTIVITY"
     private val requestPermissionRequestCode = 34
+    private val requestInterval: Long = 10000
+    private val fastestRequestInterval = requestInterval / 2
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var mLocationCallback: LocationCallback
 
@@ -31,9 +29,13 @@ class LocationManager {
         fusedLocationClient: FusedLocationProviderClient,
         locationFunction: (m: Location) -> Unit
     ) {
-        mLocationCallback = object : LocationCallback(){}
+        mLocationCallback = object : LocationCallback() {}
         createLocationRequest()
-        fusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+        fusedLocationClient.requestLocationUpdates(
+            mLocationRequest,
+            mLocationCallback,
+            Looper.myLooper()
+        )
         fusedLocationClient.lastLocation.addOnCompleteListener { taskLocation ->
             if (taskLocation.isSuccessful && taskLocation.result != null) {
                 val location = taskLocation.result
@@ -46,13 +48,6 @@ class LocationManager {
         Log.d(debugTag, "Listener added")
     }
 
-    private fun createLocationRequest() {
-        mLocationRequest = LocationRequest()
-        mLocationRequest.interval = 10000
-        mLocationRequest.fastestInterval = 5000
-        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-    }
-
     fun checkPermissions(activity: Activity) =
         ActivityCompat.checkSelfPermission(
             activity,
@@ -63,16 +58,19 @@ class LocationManager {
         if (ActivityCompat.shouldShowRequestPermissionRationale(
                 activity,
                 Manifest.permission.ACCESS_FINE_LOCATION
-            )) {
-            callSnackBar(
-                R.string.permission_rationale,
-                android.R.string.ok,
-                { startLocationPermissionRequest(activity) },
-                activity
             )
+        ) {
+            callSnackBar({ startLocationPermissionRequest(activity) }, activity)
         } else {
             startLocationPermissionRequest(activity)
         }
+    }
+
+    private fun createLocationRequest() {
+        mLocationRequest = LocationRequest()
+        mLocationRequest.interval = requestInterval
+        mLocationRequest.fastestInterval = fastestRequestInterval
+        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
     private fun startLocationPermissionRequest(context: Activity) {
@@ -83,17 +81,18 @@ class LocationManager {
     }
 
     private fun callSnackBar(
-        snackStrId: Int,
-        actionStrId: Int = 0,
         listener: View.OnClickListener? = null,
         activity: Activity
     ) {
+        val snackStrId = R.string.permission_rationale
+        val actionStrId = android.R.string.ok
+
         val snackbar = Snackbar.make(
             activity.findViewById(android.R.id.content),
             activity.getString(snackStrId),
             BaseTransientBottomBar.LENGTH_INDEFINITE
         )
-        if (actionStrId != 0 && listener != null) {
+        if (listener != null) {
             snackbar.setAction(activity.getString(actionStrId), listener)
         }
         snackbar.show()

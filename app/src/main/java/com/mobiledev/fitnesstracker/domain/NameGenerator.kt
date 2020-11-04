@@ -4,11 +4,11 @@ import com.mobiledev.fitnesstracker.persistence.ExerciseType
 
 class NameGenerator {
 
-    fun createName(item: ExerciseItem) : String {
-        var name = createPace(item.pace, item.ExerciseType)
+    fun createName(item: ExerciseItem): String {
+        var name = createPace(item.pace, item.exerciseType)
         name += createDistance(item.distance)
         return "\"$name\""
-        }
+    }
 
     private fun createPace(pace: Float, exerciseType: ExerciseType): String {
         return if (exerciseType == ExerciseType.RUNNING)
@@ -26,9 +26,9 @@ class NameGenerator {
 
     private fun createDistance(distance: Float): String {
         return when {
-                distance > 0 && distance < 5 -> "for a short distance"
-                distance > 5 && distance < 20 -> "for a long distance"
-                else -> "for a very long distance"
-            }
+            distance > 0 && distance < 5 -> "for a short distance"
+            distance > 5 && distance < 20 -> "for a long distance"
+            else -> "for a very long distance"
+        }
     }
 }
