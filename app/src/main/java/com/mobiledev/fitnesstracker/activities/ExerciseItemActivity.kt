@@ -35,7 +35,7 @@ class ExerciseItemActivity : AppCompatActivity() {
                 item.timeSpent.toString() + " minutes"
 
             fitnessTxt.text = item.exerciseType.toString().capitalize(Locale.getDefault())
-            paceTxt.text = item.pace.toString() + " km/h"
+            paceTxt.text = item.pace.toString() + " minutes per km"
             exerciseDescriptionTxt.text = nameGenerator.createName(item)
         }
     }

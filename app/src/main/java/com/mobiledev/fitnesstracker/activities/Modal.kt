@@ -47,7 +47,7 @@ class Modal @Inject constructor(
                     exerciseType = if (exerciseTypeRadioGroup.checkedRadioButtonId == runningId)
                         ExerciseType.RUNNING else
                         ExerciseType.WALKING,
-                    pace = timeSpentTxt.text.toString().toFloat() / distanceTxt.text.toString()
+                    pace = (timeSpentTxt.text.toString().toFloat()) / distanceTxt.text.toString()
                         .toFloat()
                 )
 
@@ -94,7 +94,7 @@ class Modal @Inject constructor(
                     ExerciseType.RUNNING else
                     ExerciseType.WALKING
                 item.pace =
-                    timeSpentTxt.text.toString().toFloat() / distanceTxt.text.toString().toFloat()
+                    (timeSpentTxt.text.toString().toFloat()) / distanceTxt.text.toString().toFloat()
 
                 if (isInvalidEntry(item)) {
                     Toast.makeText(
