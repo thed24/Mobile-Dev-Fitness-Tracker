@@ -2,7 +2,6 @@ package com.mobiledev.fitnesstracker.activities
 
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -79,15 +78,15 @@ class MainActivity : AppCompatActivity() {
         lastLocation: Pair<Location, Date>
     ) {
         val distance = firstLocation.first.distanceTo(lastLocation.first)
-        var different: Float = ((lastLocation.second.time - firstLocation.second.time) / (60 * 1000) % 60).toFloat()
-        Log.d("time", different.toString())
+        var different =
+            TimeUnit.MILLISECONDS.toSeconds(lastLocation.second.time - firstLocation.second.time)
 
         val newItem = ExerciseItem(
             id = 0,
             distance = distance,
             timeSpent = different.toFloat(),
             exerciseType = ExerciseType.RUNNING,
-            pace = distance / different.toFloat(),
+            pace = distance * 60 / different.toFloat(),
         )
 
         exerciseController.addEntry(newItem)
